@@ -1,7 +1,7 @@
 package com.turalabdullayev.pdf_text_search.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.turalabdullayev.pdf_text_search.model.PdfDocument;
@@ -14,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class SearchService {
 	private final PdfRepository pdfRepository;
 
-	public List<PdfDocument> searchContent(String keyword) {
-		return pdfRepository.searchByContent(keyword);
+	public Page<PdfDocument> searchContent(String keyword, int page, int size) {
+		return pdfRepository.searchByContent(keyword, PageRequest.of(page, size));
 	}
 
 }

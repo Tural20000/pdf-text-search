@@ -22,6 +22,14 @@ public class PdfUploadController {
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadPdf(@RequestParam("file") MultipartFile file) {
 		try {
+			if (file.isEmpty()) {
+				return ResponseEntity.badRequest().body("Zehmet olmasa bir fayl secin!");
+			}
+			String contentType = file.getContentType();
+			if (contentType == null || !contentType.equals("application/pdf")) {
+				return ResponseEntity.badRequest().body("Sehv format! Yalniz PDF yukleye bilersiniz.");
+			}
+
 			String uniqueFileName = fileStorageService.saveFile(file);
 
 			pdfIndexingService.indexPdf(uniqueFileName, file);

@@ -2,6 +2,8 @@ package com.turalabdullayev.pdf_text_search.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
@@ -11,6 +13,6 @@ public interface PdfRepository extends ElasticsearchRepository<PdfDocument, Stri
 	List<PdfDocument> findByContentContaining(String keyword);
 
 	@Query("{\"match\": {\"content\": \"?0\"}}")
-	List<PdfDocument> searchByContent(String query);
+	Page<PdfDocument> searchByContent(String query, Pageable pageable);
 
 }
